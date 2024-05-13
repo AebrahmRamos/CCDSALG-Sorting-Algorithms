@@ -7,8 +7,11 @@ public class Main {
         Record[] records = fileReader.readFile("data/random100.txt");
         long startTime = System.currentTimeMillis(), endTime, executionTime;
 
-        // change insertionSort to whichever sorting algorithm you want to test nalang or write a new one 
-        sortingAlgorithms.insertionSort(records, records.length);
+        // Uncomment whichever sorting algorithm you want to test, edit nalang if necessary
+        // sortingAlgorithms.insertionSort(records, records.length);
+        // sortingAlgorithms.selectionSort(records, 0);
+        // sortingAlgorithms.mergeSort(records, 0, 0);
+        sortingAlgorithms.quickSort(records, 0, records.length-1);
 
         endTime = System.currentTimeMillis();
         executionTime = endTime - startTime;
@@ -16,9 +19,9 @@ public class Main {
         System.out.println("Eecution time " + executionTime + " milliseconds");
         
         // Write sorted records to a file
-        writeRecords("sortedData.txt", records);
+        // writeRecords("sortedData.txt", records);
         // Uncomment the code below to print sorted records
-        // printRecords(records);
+        printRecords(records);
     }
 
     public static void writeRecords(String filename, Record[] records) {

@@ -4,12 +4,49 @@
 
 public class SortingAlgorithms {
 
-    /*
-     * You may define additional helper functions here if you need to.
-     * Make sure the helper functions have the private access modifier, as
-     * they will only be used in this class.
-     */
+    // May create helper functions, use 'private' access modifier
+    // - - - - - - - HELPER FUNCTIONS - - - - - - - 
 
+    /*
+     * Swaps the values of index i and and j
+     * Record[] arr - an array consisting of objects we are swapping
+     * int p - element to swap
+     * int r - element to swap
+     */
+    private void swap(Record[] arr, int i, int j) {
+        Record temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    /*
+     * Returns the correct position/index of the pivot element
+     * Record[] arr - an array consisting of objects we are sorting
+     * int p - is the index of the first element of the partition
+     * int r - is the last element of the partition
+     *  
+     * @returns i+1 as the index of the pivot element
+     */
+    private int partition(Record[] arr, int p, int r){
+        int pivot = arr[r].getIdNumber(), i = p-1, j;
+
+        for ( j = p; j < r; j++) {
+            if (arr[j].getIdNumber() < pivot) {
+                i++;
+                swap(arr, i, j);    
+            }
+        }
+        
+        swap(arr, i+1, j);
+        return(i+1);
+    }
+
+
+
+
+
+    
+    // - - - - - - - SORTING ALGORITHMS - - - - - - - 
     public void insertionSort(Record[] arr, int n) {
         // TODO: Implement this sorting algorithm here.
 
@@ -30,9 +67,18 @@ public class SortingAlgorithms {
      * ones given above. Make sure that the method accepts an array of
      * records
      */
+    /*
+     * Implementation of Quick Sort algorithm
+     * Record[] arr - contains the array of objects we are sorting
+     * int p - is the index of the first element of the array
+     * int r - is the last element of the array
+     */
+    public void quickSort(Record[] arr, int p, int r) {
+        if (p < r) {
+            int partitionIndex = partition(arr, p, r);
 
-     public void quickSort(Record[] arr, int p, int r) {
-        // TODO: Implement this sorting algorithm here.
-
+            quickSort(arr, p, partitionIndex-1);
+            quickSort(arr, partitionIndex+1, r);
+        }
     }
 }
