@@ -8,10 +8,10 @@ public class Main {
         long startTime = System.currentTimeMillis(), endTime, executionTime;
 
         // Uncomment whichever sorting algorithm you want to test, edit nalang if necessary
-        sortingAlgorithms.insertionSort(records, records.length);
+        // sortingAlgorithms.insertionSort(records, records.length);
         // sortingAlgorithms.selectionSort(records, 0);
         // sortingAlgorithms.mergeSort(records, records.length);
-        // sortingAlgorithms.quickSort(records, 0, records.length-1);
+        sortingAlgorithms.quickSort(records, 0, records.length-1);
 
         endTime = System.currentTimeMillis();
         executionTime = endTime - startTime;
