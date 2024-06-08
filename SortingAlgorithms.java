@@ -41,15 +41,40 @@ public class SortingAlgorithms {
         return(i+1);
     }
 
+    private void merge(Record[] arr, Record[] left, Record[] right, int nLeft, int nRight) {
+        int leftCounter = 0, rightCounter = 0, arrCounter = 0;
 
+        while (leftCounter < nLeft && rightCounter < nRight) {
+            if (left[leftCounter].getIdNumber() < right[rightCounter].getIdNumber()) {
+                arr[arrCounter++] = left[leftCounter++];
+            } else if (left[leftCounter].getIdNumber() > right[rightCounter].getIdNumber()) {
+                arr[arrCounter++] = right[rightCounter++];
+            }
+        }
 
+        while (leftCounter < nLeft) {
+            arr[arrCounter++] = left[leftCounter++];
+        }
 
+        while (rightCounter < nRight) {
+            arr[arrCounter++] = right[rightCounter++];
+        }
+    }
 
     
     // - - - - - - - SORTING ALGORITHMS - - - - - - - 
     public void insertionSort(Record[] arr, int n) {
-        // TODO: Implement this sorting algorithm here.
+        int lastSorted = 0, i, j;
 
+        for(i = 1; i < n; i++){
+            for(j = lastSorted; j > 0; j--){
+                if (arr[i].getIdNumber() < arr[j].getIdNumber()) {
+                    arr[j+1] = arr[j];
+                } else {
+                    arr[j] = arr[i];
+                }
+            }
+        }
     }
 
     public void selectionSort(Record[] arr, int n) {
@@ -57,9 +82,27 @@ public class SortingAlgorithms {
 
     }
 
-    public void mergeSort(Record[] arr, int p, int r) {
-        // TODO: Implement this sorting algorithm here.
+    public void mergeSort(Record[] arr, int n) {
+        if (n<2) {
+            return;
+        }
 
+        int mid = n/2, ctr;
+        Record left[] = new Record[mid];
+        Record right[] = new Record[n-mid];
+
+        for(ctr = 0; ctr < mid; ctr++){
+            left[ctr] = arr[ctr];
+        }
+
+        for(ctr = mid; ctr < n; ctr++){
+            right[ctr - mid] = arr[ctr];
+        }
+
+        mergeSort(left, mid);
+        mergeSort(right, n-mid);
+
+        merge(arr, left, right, mid, n-mid);
     }
 
     /*
