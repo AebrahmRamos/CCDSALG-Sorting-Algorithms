@@ -8,7 +8,7 @@ public class SortingAlgorithms {
     // - - - - - - - HELPER FUNCTIONS - - - - - - - 
 
     /*
-     * Swaps the values of index i and and j
+     * Swaps the values of index i and j
      * Record[] arr - an array consisting of objects we are swapping
      * int p - element to swap
      * int r - element to swap
@@ -41,6 +41,37 @@ public class SortingAlgorithms {
         return(i+1);
     }
 
+    /*
+     * Merges two subarrays of Record[] into a single sorted subarray.
+     * This function assumes that the subarrays are already sorted.
+     * First subarray is records from left to mid (inclusive).
+     * Second subarray is records from mid+1 to right (inclusive).
+     * It merges them in a sorted order back into the original array.
+     *
+     *   Record[] arr - the original array containing both subarrays
+     *   Record[] left - the first sorted subarray
+     *   Record[] right - the second sorted subarray
+     *   int leftSize - the size of the first subarray
+     *   int rightSize - the size of the second subarray
+     */
+    private void merge(Record[] arr, Record[] left, Record[] right, int leftSize, int rightSize) {
+        int i = 0, j = 0, k = 0;
+
+        while (i < leftSize && j < rightSize) {
+            if (left[i].getIdNumber() <= right[j].getIdNumber()) {
+                arr[k++] = left[i++];
+            } else {
+                arr[k++] = right[j++];
+            }
+        }
+        while (i < leftSize) {
+            arr[k++] = left[i++];
+        }
+        while (j < rightSize) {
+            arr[k++] = right[j++];
+        }
+    }
+
     
     // - - - - - - - SORTING ALGORITHMS - - - - - - - 
     public void insertionSort(Record[] arr, int n) {
@@ -54,8 +85,33 @@ public class SortingAlgorithms {
 
     }
 
+    /*
+     * Implementation of the Merge Sort algorithm.
+     * Merge Sort is a divide-and-conquer algorithm that divides the array
+     * into two halves, recursively sorts each half, and then merges the
+     * sorted halves back together.
+     *
+     * Parameters:
+     *   Record[] arr - an array of records to be sorted
+     *   int n - the number of records in the array
+     */
     public void mergeSort(Record[] arr, int n) {
-        // TODO: Implement this sorting algorithm here.
+        if (n<2) {
+            return;
+        }
+
+        int mid = n/2;
+
+        Record[] left = new Record[mid];
+        Record[] right = new Record[n-mid];
+
+        System.arraycopy(arr, 0, left, 0, mid);
+        System.arraycopy(arr, mid, right, 0, n-mid);
+
+        mergeSort(left, mid);
+        mergeSort(right, n-mid);
+
+        merge(arr, left, right, mid, n-mid);
     }
 
     /*
@@ -63,6 +119,7 @@ public class SortingAlgorithms {
      * ones given above. Make sure that the method accepts an array of
      * records
      */
+
     /*
      * Implementation of Quick Sort algorithm
      * Record[] arr - contains the array of objects we are sorting
