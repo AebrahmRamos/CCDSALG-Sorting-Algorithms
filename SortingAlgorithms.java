@@ -33,7 +33,7 @@ public class SortingAlgorithms {
         for ( j = p; j < r; j++) {
             if (arr[j].getIdNumber() < pivot) {
                 i++;
-                swap(arr, i, j);    
+                swap(arr, i, j); 
             }
         }
         
@@ -44,7 +44,9 @@ public class SortingAlgorithms {
     
     // - - - - - - - SORTING ALGORITHMS - - - - - - - 
     public void insertionSort(Record[] arr, int n) {
-        // TODO: Implement this sorting algorithm here.
+        for(int i = 1; i < n; i++)
+            for (int j = i; j > 0 && arr[j-1].getIdNumber() > arr[j].getIdNumber(); j--)
+                swap(arr, j-1, j);
     }
 
     public void selectionSort(Record[] arr, int n) {
