@@ -28,6 +28,8 @@ public class SortingAlgorithms {
      * @returns i+1 as the index of the pivot element
      */
     private int partition(Record[] arr, int p, int r){
+        int pivotIndex = getPivotElement(arr, p, r); // "median of three" to determine the pivot element
+        swap(arr, pivotIndex, r); // Shift the pivot to the last element
         int pivot = arr[r].getIdNumber(), i = p-1, j;
 
         for ( j = p; j < r; j++) {
@@ -39,6 +41,26 @@ public class SortingAlgorithms {
         
         swap(arr, i+1, j);
         return(i+1);
+    }
+
+    private int getPivotElement(Record[] arr, int p, int r) {
+        int mid = (p + r) / 2; // (low + high) / 2
+
+        // if start element is greater than mid element
+        if (arr[p].getIdNumber() > arr[mid].getIdNumber()) {
+            swap(arr, p, mid);
+        }
+
+        // if start element is greater than last element
+        if (arr[p].getIdNumber() > arr[r].getIdNumber()) {
+            swap(arr, p, r);
+        }
+
+        // if mid element is greater than last elemetn
+        if (arr[mid].getIdNumber() > arr[r].getIdNumber()) {
+            swap(arr, mid, r);
+        }
+        return mid;
     }
 
     /*
