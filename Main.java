@@ -9,8 +9,8 @@ public class Main {
 
         // Uncomment whichever sorting algorithm you want to test, edit if necessary
         // sortingAlgorithms.insertionSort(records, records.length);
-        // sortingAlgorithms.selectionSort(records, 0);
-        sortingAlgorithms.mergeSort(records, 0, records.length - 1);
+        sortingAlgorithms.selectionSort(records, records.length);
+        // sortingAlgorithms.mergeSort(records, 0, records.length - 1);
         // sortingAlgorithms.quickSort(records, 0, records.length-1);
 
         endTime = System.currentTimeMillis();
