@@ -63,34 +63,54 @@ public class SortingAlgorithms {
         return mid;
     }
 
-    /*
-     * Merges two subarrays of Record[] into a single sorted subarray.
-     * This function assumes that the subarrays are already sorted.
-     * First subarray is records from left to mid (inclusive).
-     * Second subarray is records from mid+1 to right (inclusive).
-     * It merges them in a sorted order back into the original array.
-     *
-     *   Record[] arr - the original array containing both subarrays
-     *   Record[] left - the first sorted subarray
-     *   Record[] right - the second sorted subarray
-     *   int leftSize - the size of the first subarray
-     *   int rightSize - the size of the second subarray
-     */
-    private void merge(Record[] arr, Record[] left, Record[] right, int leftSize, int rightSize) {
-        int i = 0, j = 0, k = 0;
+    public void merge(Record[] arr, int l, int m, int r) {
 
-        while (i < leftSize && j < rightSize) {
-            if (left[i].getIdNumber() <= right[j].getIdNumber()) {
-                arr[k++] = left[i++];
+        //find subsizes of two subarrays to be merged
+        int n1 = m - l + 1;
+        int n2 = r - m;
+
+        //create temp arrays
+        Record[] L = new Record[n1];
+        Record[] R = new Record[n2];
+
+        //copy data to temp arrays
+        for(int i = 0; i < n1; i++) {
+            L[i] = arr[l + i];
+        }
+        for(int j = 0; j < n2; j++) {
+            R[j] = arr[m + 1 + j];
+        }
+
+        //merge the temp arrays
+
+        //initial indexes of first and second subarrays
+        int i = 0, j = 0;
+
+        //initial index of merged subarray array
+        int k = l;
+        while(i < n1 && j < n2) {
+            if(L[i].getIdNumber() <= R[j].getIdNumber()) {
+                arr[k] = L[i];
+                i++;
             } else {
-                arr[k++] = right[j++];
+                arr[k] = R[j];
+                j++;
             }
+            k++;
         }
-        while (i < leftSize) {
-            arr[k++] = left[i++];
+
+        //copy remaining elements of L[] if any
+        while(i < n1) {
+            arr[k] = L[i];
+            i++;
+            k++;
         }
-        while (j < rightSize) {
-            arr[k++] = right[j++];
+
+        //copy remaining elements of R[] if any
+        while(j < n2) {
+            arr[k] = R[j];
+            j++;
+            k++;
         }
     }
 
@@ -114,6 +134,8 @@ public class SortingAlgorithms {
         }
     }
 
+    
+
     /*
      * Implementation of the Merge Sort algorithm.
      * Merge Sort is a divide-and-conquer algorithm that divides the array
@@ -124,23 +146,19 @@ public class SortingAlgorithms {
      *   Record[] arr - an array of records to be sorted
      *   int n - the number of records in the array
      */
-    public void mergeSort(Record[] arr, int n) {
-        if (n<2) {
-            return;
+    public void mergeSort(Record[] arr, int p, int r) {
+        if(p < r) {
+            //find the middle point
+            int m = (p + r) / 2;
+
+            //sort first and second halves
+            mergeSort(arr, p, m);
+            mergeSort(arr, m + 1, r);
+
+            //merge the sorted halves
+            merge(arr, p, m, r);
         }
 
-        int mid = n/2;
-
-        Record[] left = new Record[mid];
-        Record[] right = new Record[n-mid];
-
-        System.arraycopy(arr, 0, left, 0, mid);
-        System.arraycopy(arr, mid, right, 0, n-mid);
-
-        mergeSort(left, mid);
-        mergeSort(right, n-mid);
-
-        merge(arr, left, right, mid, n-mid);
     }
 
     /*
